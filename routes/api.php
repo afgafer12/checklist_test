@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\Api\CheckListController;
 use App\Http\Controllers\Api\CheckListItemController;
 use Illuminate\Http\Request;
@@ -24,10 +25,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// Route::post('/login')->controller(CheckListController::class);
-// Route::post('/register')->controller(CheckListController::class);
+Route::post('/login', '\App\Http\Controllers\Api\AuthController@login');
+Route::post('/register', '\App\Http\Controllers\Api\AuthController@register');
 
-// Route::middleware('auth:api')->group(function(){
+Route::middleware('auth:api')->group(function(){
 
     Route::prefix('/checklist')->controller(CheckListController::class)->group(function () {
         Route::get('/', 'getAll');
@@ -44,4 +45,4 @@ use Illuminate\Support\Facades\Route;
         });
     });
 
-// });
+});

@@ -9,8 +9,9 @@ class UtilityApi
 {
     protected $msg = [
         '200'=> 'Success',
-        '422'=> 'Unprocessable Entity',
+        '401'=> 'Unauthorized',
         '404'=> 'Not found',
+        '422'=> 'Unprocessable Entity',
         '500'=> 'Internal server error',
     ];
 
@@ -18,14 +19,14 @@ class UtilityApi
         if($code == 500 || $code == 422){
             return response()->json([
                 'code' => $code,
-                'message' => $this->msg[$code],
+                'message' => $this->msg[$code] ?? $msg,
                 'errors' => $data,
             ], $code);
         }
 
         $resp = [
             'code' => $code,
-            'message' => $msg == '' ? $this->msg[$code] : $msg,
+            'message' => $this->msg[$code] ?? $msg,
             'data' => $data,
         ];
         // if($data instanceof LengthAwarePaginator || $data instanceof Paginator){
