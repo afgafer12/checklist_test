@@ -26,24 +26,22 @@ use Illuminate\Support\Facades\Route;
 
 // Route::post('/login')->controller(CheckListController::class);
 // Route::post('/register')->controller(CheckListController::class);
-Route::prefix('/checklist')->controller(CheckListController::class)->group(function () {
-    Route::get('/', 'getAll');
-    Route::post('/', 'create');
-    Route::delete('/{clId}', 'delete');
-    //item
-    Route::prefix('/{clId}/item')->controller(CheckListItemController::class)->group(function () {
-        Route::get('/', 'getAll');
-        Route::get('/{itemId}', 'getDetil');
-        Route::post('/', 'create');
-        Route::put('/rename/{itemId}', 'updateRename');
-        Route::put('/{itemId}', 'updateStatus');
-        Route::delete('/{itemId}', 'delete');
 
-        // Route::get('/{clId}/item', 'getAll');
-        // Route::get('/{clId}/item/{itemId}', 'getDetil');
-        // Route::post('/{clId}/item', 'create');
-        // Route::put('/{clId}/item/rename/{itemId}', 'updateStatus');
-        // Route::put('/{clId}/item/{itemId}', 'updateStatus');
-        // Route::delete('/{clId}/item/{itemId}', 'delete');
+// Route::middleware('auth:api')->group(function(){
+
+    Route::prefix('/checklist')->controller(CheckListController::class)->group(function () {
+        Route::get('/', 'getAll');
+        Route::post('/', 'create');
+        Route::delete('/{clId}', 'delete');
+        //item
+        Route::prefix('/{clId}/item')->controller(CheckListItemController::class)->group(function () {
+            Route::get('/', 'getAll');
+            Route::get('/{itemId}', 'getDetil');
+            Route::post('/', 'create');
+            Route::put('/rename/{itemId}', 'updateRename');
+            Route::put('/{itemId}', 'updateStatus');
+            Route::delete('/{itemId}', 'delete');
+        });
     });
-});
+
+// });
