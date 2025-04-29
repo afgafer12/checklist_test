@@ -1,0 +1,49 @@
+<?php
+
+use App\Http\Controllers\Api\CheckListController;
+use App\Http\Controllers\Api\CheckListItemController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
+|
+*/
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::post('/login')->controller(CheckListController::class);
+// Route::post('/register')->controller(CheckListController::class);
+Route::prefix('/checklist')->controller(CheckListController::class)->group(function () {
+    Route::get('/', 'getAll');
+    Route::post('/', 'create');
+    Route::delete('/{clId}', 'delete');
+    //item
+    Route::prefix('/{clId}/item')->controller(CheckListItemController::class)->group(function () {
+        Route::get('/', 'getAll');
+        Route::get('/{itemId}', 'getDetil');
+        Route::post('/', 'create');
+        Route::put('/rename/{itemId}', 'updateRename');
+        Route::put('/{itemId}', 'updateStatus');
+        Route::delete('/{itemId}', 'delete');
+
+        // Route::get('/{clId}/item', 'getAll');
+        // Route::get('/{clId}/item/{itemId}', 'getDetil');
+        // Route::post('/{clId}/item', 'create');
+        // Route::put('/{clId}/item/rename/{itemId}', 'updateStatus');
+        // Route::put('/{clId}/item/{itemId}', 'updateStatus');
+        // Route::delete('/{clId}/item/{itemId}', 'delete');
+    });
+});
