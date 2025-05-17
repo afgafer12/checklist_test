@@ -27,7 +27,7 @@ class AuthController extends Controller
             ]
         );
         if($validator->fails()){
-            return $this->utilApi->resp($validator->errors(), 422, 422,);
+            return $this->utilApi->resp($validator->errors(), 422, 422);
         }
 
         $credentials = $request->only('username', 'password');
@@ -54,7 +54,7 @@ class AuthController extends Controller
             ]
         );
         if($validator->fails()){
-            return $this->utilApi->resp($validator->errors(), 422, 422,);
+            return $this->utilApi->resp($validator->errors(), 422, 422);
         }
 
         try{
@@ -76,8 +76,12 @@ class AuthController extends Controller
                 'user'=> $user,
             ];
         }catch(Exception $e ){
-            return $this->utilApi->resp($e, 500, 500, 'Internal server eroor');
+            return $this->utilApi->resp(null, 500, 500);
         }
         return $this->utilApi->resp($data);
+    }
+
+    public function unauthorized(){
+        return $this->utilApi->resp(null, 401, 401);
     }
 }
